@@ -10,10 +10,10 @@
       body, html{
         border: 0;
         background-color: #0000;
-        background-image: url(https://jsbot.whitehot.ninja/uploads/hVMqI.jpg);
-        background-repead: no-repeat;
+        background-image: url(https://drawings.whitehot.ninja/jZm6Crs.jpeg);
+        background-repeat: no-repeat;
         background-attachment: fixed;
-        background-size: 100vw 100vh;
+        background-size: cover;
         height: 100vh;
         overflow: hidden;
         color:#cfd;
@@ -28,7 +28,7 @@
         z-index: 0;
         top: 0;
         left: 0;
-        background: #0008;
+        background: #000d;
         background-repeat: no-repeat;
         background-attachment: fixed;
         background-size: 100vw 100vh;
@@ -251,7 +251,7 @@
     </style>
   </head>
   <body>
-    <div class="headerLogo" onclick="window.location.href='/public_playlists'" title="go to homepage"></div>
+	  <!-- <div class="headerLogo" onclick="window.location.href='/public_playlists'" title="go to homepage"></div> -->
     <div class="bg_overlay"></div>
     <div id="addTrackModal" class="modal">
       <input
@@ -282,7 +282,7 @@
         <input type="checkbox" checked id="shuffle" oninput="toggleShuffle(this)">
         shuffle
       </label>
-      <button onclick="showModal('#addTrackModal')" class="normalButtons">add track(s)</button>
+      <!-- <button onclick="showModal('#addTrackModal')" class="normalButtons">add track(s)</button> -->
       <br><br>
       <div id="iframeDiv">
         <iframe
@@ -423,7 +423,7 @@
       preloadNext=()=>{
         setTimeout(()=>{
           nextRnd = shuffle? Rn()*tracks.length|0 : (curIDX + 1)%tracks.length
-          let nextTrackName=decodeURI(tracks[nextRnd].replaceAll('tracks/',''))
+          let nextTrackName=decodeURI((l=tracks[nextRnd].split('/'))[l.length-1])
           let t=0
           let loadingTimer = setInterval(()=>{
             bufferedTrack.innerHTML='<span style="color: #afc;font-weight: 900;">next track:</span>'+" <span style=\"color: #aaa;font-weight: 900;\">(buffering"+('.'.repeat(t%8))+('&nbsp;'.repeat(8-(t%8)))+")</span>"+'<br>'+('&nbsp;'.repeat(4))+'<span class="bufferTrackTitle">'+nextTrackName+'</span>'
@@ -438,7 +438,7 @@
           }, 30000)
           setTimeout(()=>{
             preload.crossorigin="anonymous"
-            preload.src = window.location.href + tracks[nextRnd] + (userInteracted ? '?autoplay' : '')
+            preload.src = tracks[nextRnd] + (userInteracted ? '?autoplay' : '')
             preload.onloadeddata=()=>{
               clearInterval(loadingTimer)
               bufferedTrack.innerHTML='<span style="color: #afc;font-weight: 900;">next track:</span>'+` <span class="loaded">(loaded!)</span>`+'<br>'+('&nbsp;').repeat(4)+'<span class="bufferTrackTitle">'+nextTrackName+'</span>'
@@ -448,13 +448,13 @@
       }
       
       playTrack=idx=>{
-        let src = 'https://cantelope42.github.io/audioplayer_github/?i=' + location.origin + '/' + tracks[idx] + (userInteracted ? '?autoplay' : '')
+        let src = 'https://cantelope42.github.io/audioplayer_github/?i=' + tracks[idx] + (userInteracted ? '?autoplay' : '')
         console.log(idx, userInteracted, src)
         let el
         (el = document.querySelectorAll('.playerFrame')[0])
         preloadNext()
         postMessage(JSON.stringify({'userInteracted': userInteracted}))
-        el.src = 'https://cantelope42.github.io/audioplayer_github/?i=' + location.origin + '/' + tracks[idx] + (userInteracted ? '?autoplay' : '')
+        el.src = 'https://cantelope42.github.io/audioplayer_github/?i=' + tracks[idx] + (userInteracted ? '?autoplay' : '')
       }
       
       curIDX = 0
@@ -468,7 +468,8 @@
           tb.onclick = () =>{
             playTrack(curIDX = i)
           }
-          tb.innerHTML = decodeURI(v.replaceAll('tracks/', '')) + '<br>'
+          tb.innerHTML = decodeURI((l=v.split('/'))[l.length-1])
+	  //tb.innerHTML = decodeURI(v.replace('tracks/', '')) + '<br>'
           trackDiv.appendChild(tb)
           let db = document.createElement('button')
           db.className = 'deleteButton'
@@ -488,12 +489,12 @@
       }
 
       console.log('attempting to set message listener')
-	    window.addEventListener('message', e => {
+     window.addEventListener('message', e => {
 
         console.log('received message from audioplayer:',e)
         const key = e.message ? 'message' : 'data';
         const data = e[key];
-        console.log('e[message]:',e.message,'e[data]',e.data,'e.playing',e.playing)
+			  console.log('e[message]:',e.message,'e[data]',e.data,'e.playing',e.playing)
         switch(data){
           case 'ended':
             playTrack(shuffle ? nextRnd : curIDX=(curIDX+1)%tracks.length)
@@ -518,16 +519,21 @@
       }
 
 
-tracks = [
+      tracks = [
+"Depeche Mode - A Question Of Time (Official Video).mp3","Depeche Mode - In Your Room (Official Video).mp3","Depeche Mode - Shake The Disease (Official Video).mp3","Depeche Mode - Blasphemous Rumours (Official Video).mp3","Depeche Mode - Its No Good (Official Video).mp3","Depeche Mode - Should Be Higher (Live).mp3","Depeche Mode - Enjoy The Silence (Official Video).mp3","Depeche Mode Just cant get enough | Archive INA.mp3","Depeche Mode - Strangelove (Official Video).mp3","Depeche Mode - Everything Counts (Official Video).mp3","Depeche Mode - Master And Servant (Official Video).mp3","Depeche Mode - Stripped (Official Video).mp3","Depeche Mode - Freelove (Official Video).mp3","Depeche Mode - People Are People (Official Video).mp3","Depeche Mode - Suffer Well (Official Video).mp3","Depeche Mode - Get the Balance Right! (Official Video).mp3","Depeche Mode - Personal Jesus (Official Video).mp3","Depeche Mode - Walking In My Shoes (Official Video).mp3","Depeche Mode - Heaven.mp3","Depeche Mode - Policy Of Truth (Official Video).mp3","Depeche Mode - Wheres the Revolution (Video).mp3","Depeche Mode - I Feel You (Official Video).mp3","Depeche Mode - Precious (Official Video).mp3","Depeche Mode - World In My Eyes (Official Video).mp3"
+		  ]
 
- "Depeche Mode - A Question Of Time (Official Video).mp3","Depeche Mode - In Your Room (Official Video).mp3","Depeche Mode - Shake The Disease (Official Video).mp3","Depeche Mode - Blasphemous Rumours (Official Video).mp3","Depeche Mode - Its No Good (Official Video).mp3","Depeche Mode - Should Be Higher (Live).mp3","Depeche Mode - Enjoy The Silence (Official Video).mp3","Depeche Mode Just cant get enough | Archive INA.mp3","Depeche Mode - Strangelove (Official Video).mp3","Depeche Mode - Everything Counts (Official Video).mp3","Depeche Mode - Master And Servant (Official Video).mp3","Depeche Mode - Stripped (Official Video).mp3","Depeche Mode - Freelove (Official Video).mp3","Depeche Mode - People Are People (Official Video).mp3","Depeche Mode - Suffer Well (Official Video).mp3","Depeche Mode - Get the Balance Right! (Official Video).mp3","Depeche Mode - Personal Jesus (Official Video).mp3","Depeche Mode - Walking In My Shoes (Official Video).mp3","Depeche Mode - Heaven.mp3","Depeche Mode - Policy Of Truth (Official Video).mp3","Depeche Mode - Wheres the Revolution (Video).mp3","Depeche Mode - I Feel You (Official Video).mp3","Depeche Mode - Precious (Official Video).mp3","Depeche Mode - World In My Eyes (Official Video).mp3"
-	    ]
 
+      tracks = tracks.map((v,i)=> {
+        `tracks/` + encodeURIComponent(v)
+      })
 
-	    tracks = tracks.map((v,i)=> {
-	    return (i<0?'https://cantelope42.github.io/depechemode/':'tracks/')+encodeURIComponent(v)
-	    })
-
+      a = []
+      tracks = tracks.map(v=>{
+        a=[...a, ...v]
+      })
+      tracks = a
+      //console.log(tracks)
 
       vid = document.createElement('video')
       vid.style.position = 'absolute'
