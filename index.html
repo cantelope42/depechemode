@@ -493,7 +493,7 @@
         console.log('received message from audioplayer:',e)
         const key = e.message ? 'message' : 'data';
         const data = e[key];
-			  console.log('e[message]:',e.message,'e[data]',e.data,'e.playing',e.playing)
+        console.log('e[message]:',e.message,'e[data]',e.data,'e.playing',e.playing)
         switch(data){
           case 'ended':
             playTrack(shuffle ? nextRnd : curIDX=(curIDX+1)%tracks.length)
@@ -525,7 +525,7 @@ tracks = [
 
 
 	    tracks = tracks.map((v,i)=> {
-	    return (i<3?'https://cantelope42.github.io/depechemode/':'tracks/')+encodeURIComponent(v)
+	    return (i<0?'https://cantelope42.github.io/depechemode/':'tracks/')+encodeURIComponent(v)
 	    })
 
 
